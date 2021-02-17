@@ -4,7 +4,7 @@
   "description": "Url Shortner",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon",
+    "yarn:dev": "nodemon",
     "build": "rimraf ./build && tsc"
   },
   "author": "Cristian Cruceanu",
@@ -14,5 +14,8 @@
     "nodemon": "^2.0.7",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.5"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0"
   }
 }
