@@ -16,7 +16,7 @@ app.get("/urls", async (req, res) => {
     res.json(users);
 });
 app.get("/url-create", async (req, res) => {
-    const user = new Url({ url: "urlTest" });
+    const user = new Url({ url: "urlTest", short:'test1' });
     await user.save().then(() => console.log("User created"));
     res.send("User created \n");
 });
