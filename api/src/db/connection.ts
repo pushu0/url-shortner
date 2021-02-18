@@ -1,10 +1,19 @@
 // connection.js
 import mongoose from "mongoose";
-import Url from "./models/Url.model";
+import dotenv from 'dotenv';
+dotenv.config()
 
-const connection = "mongodb://database:27017/url-shortner";
+const db = process.env.MONGO_DB || "localhost"
+
+const options = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+}
+
+const connection = `mongodb://${db}:27017/url-shortner`;
 const connectDb = () => {
- return mongoose.connect(connection);
+ return mongoose.connect(connection, options);
 };
 
 export default connectDb
