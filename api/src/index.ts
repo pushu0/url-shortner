@@ -30,6 +30,7 @@ app.get("/urls", async (req, res) => {
 app.post("/url-create", async (req, res) => {
     const prettyId = await uniqueId()
 
+    //TODO check if exists and return entry?
     const user = new Url({ url: "https://urlTest.com", id: prettyId });
     console.log(prettyId)
     await user.save().then(() => console.log("User created"));
