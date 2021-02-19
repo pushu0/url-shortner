@@ -1,93 +1,142 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <div class="text-center">
-        <logo />
-        <vuetify-logo />
+  <div class="container">
+    <div class="outer-card">
+      <div class="hero-image">
+        <hero-image />
       </div>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>
-            Vuetify is a progressive Material Design component framework for
-            Vue.js. It was designed to empower developers to create amazing
-            applications.
-          </p>
-          <p>
-            For more information on Vuetify, check out the
-            <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation </a
-            >.
-          </p>
-          <p>
-            If you have questions, please join the official
-            <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord </a
-            >.
-          </p>
-          <p>
-            Find a bug? Report it on the github
-            <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board </a
-            >.
-          </p>
-          <p>
-            Thank you for developing with Vuetify and I look forward to bringing
-            more exciting features in the future.
-          </p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
+      <div class="card">
+        <div class="wrapper">
+          <h1 class="title">
+            Shorten any <span class="highlight">links</span>.
+          </h1>
+          <div class="heading">
+            <p class="heading">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
+              ornare id neque vel semper. Nunc augue magna, blandit ac lorem at,
+              ornare tempor diam.
+            </p>
           </div>
-          <hr class="my-3" />
-          <a
+          <div class="links">
+            <input type="text" name="url" class="text-input" />
+            <!-- <a
             href="https://nuxtjs.org/"
             target="_blank"
             rel="noopener noreferrer"
+            class="button--green"
           >
-            Nuxt Documentation
-          </a>
-          <br />
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" nuxt to="/inspire"> Continue </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-  </v-row>
+            Documentation
+          </a> -->
+            <a
+              href="https://github.com/nuxt/nuxt.js"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="button--grey"
+            >
+              Shorten Url
+            </a>
+          </div>
+          <div class="credentials">
+            Powered by <span class="highlight">IWantThisJob</span>.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
-<script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+import HeroImage from '../components/HeroImage.vue'
 
-export default {
+export default defineComponent({
   components: {
-    Logo,
-    VuetifyLogo,
+    HeroImage,
   },
-}
+  setup() {},
+})
 </script>
+
+<style>
+.container {
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #eaeaea;
+}
+
+.hero-image {
+  max-width: 500px;
+  width: 100%;
+  margin: auto;
+}
+
+.title {
+  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  display: block;
+  font-weight: 500;
+  font-size: 50px;
+  color: #35495e;
+  letter-spacing: 1px;
+  margin-bottom: 0.2em;
+}
+.heading {
+  max-width: 80%;
+  margin: auto;
+}
+.heading p {
+  font-weight: 300;
+  font-size: 15px;
+  color: black;
+  word-spacing: 5px;
+  padding-bottom: 15px;
+  text-align: center;
+}
+
+.links {
+  padding-top: 15px;
+  display: flex;
+}
+
+.outer-card {
+  position: relative;
+  background-color: white;
+  border-radius: 20px;
+  width: 80%;
+  padding: 6% 10% 8% 8%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+.outer-card .wrapper {
+  max-width: 70%;
+  margin: auto;
+}
+
+.text-input {
+  display: inline-block;
+  border-radius: 4px;
+  border: 1px solid #35495e;
+  color: #35495e;
+  text-decoration: none;
+  padding: 10px 10px;
+  margin-left: 15px;
+  font-size: 16px;
+  display: flex;
+  flex: 1;
+  background-color: #eaeaea;
+}
+
+.highlight {
+  color: rgb(50, 132, 255);
+}
+
+.credentials {
+  font-size: 12px;
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>
