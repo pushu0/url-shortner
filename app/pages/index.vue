@@ -1,58 +1,86 @@
 <template>
   <div class="container">
-    <div class="outer-card">
-      <div class="hero-image">
-        <hero-image />
-      </div>
-      <div class="card">
-        <div class="wrapper">
-          <h1 class="title">
-            Shorten any <span class="highlight">links</span>.
-          </h1>
-          <div class="heading">
-            <p class="heading">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-              ornare id neque vel semper. Nunc augue magna, blandit ac lorem at,
-              ornare tempor diam.
-            </p>
-          </div>
-          <div class="links">
-            <input type="text" name="url" class="text-input" />
-            <!-- <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="button--green"
-          >
-            Documentation
-          </a> -->
-            <a
-              href="https://github.com/nuxt/nuxt.js"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="button--grey"
-            >
-              Shorten Url
-            </a>
-          </div>
-          <div class="credentials">
-            Powered by <span class="highlight">IWantThisJob</span>.
+    <transition name="fade" appear>
+      <div class="outer-card">
+        <div class="hero-image">
+          <hero-image />
+        </div>
+        <div class="card">
+          <div class="wrapper">
+            <h1 class="title">
+              Shorten any <span class="highlight">links</span>.
+            </h1>
+            <div class="heading">
+              <p class="heading">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
+                ornare id neque vel semper. Nunc augue magna, blandit ac lorem
+                at, ornare tempor diam.
+              </p>
+            </div>
+            <div class="links">
+              <input
+                v-model="url"
+                type="text"
+                name="url"
+                class="text-input"
+                @keydown.enter="shortenUrl"
+              />
+              <button
+                target="_blank"
+                rel="noopener noreferrer"
+                class="button--grey"
+                :disabled="!isValid"
+                @click="shortenUrl"
+              >
+                Shorten Url
+              </button>
+            </div>
+            <div class="credentials">
+              Powered by <span class="highlight">IWantThisJob</span>.
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
 import HeroImage from '../components/HeroImage.vue'
+
+function isURL(str: string) {
+  return /(?:https?:\/\/)?(?:[a-zA-Z0-9.-]+?\.(?:[a-zA-Z])|\d+\.\d+\.\d+\.\d+)/.test(
+    str
+  )
+}
 
 export default defineComponent({
   components: {
     HeroImage,
   },
-  setup() {},
+  setup() {
+    const url = ref<string>('')
+    const shortenUrl = () => {
+      console.log('shortening', isProtocol(url.value))
+    }
+
+    const isValid = computed(() => isURL(url.value))
+    const isProtocol = (url: string) => {
+      try {
+        const urlObj = new URL(url)
+        return !!urlObj.protocol
+      } catch {
+        return false
+      }
+    }
+
+    return {
+      url,
+      isValid,
+      shortenUrl,
+    }
+  },
 })
 </script>
 
@@ -117,19 +145,23 @@ export default defineComponent({
 .text-input {
   display: inline-block;
   border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
+  border: 1px solid var(--dark-blue);
+  color: var(--charcoal);
   text-decoration: none;
   padding: 10px 10px;
   margin-left: 15px;
   font-size: 16px;
   display: flex;
   flex: 1;
-  background-color: #eaeaea;
+  background-color: var(--light-gray);
+}
+
+.text-input:focus {
+  outline: var(--dark-blue) auto 1px;
 }
 
 .highlight {
-  color: rgb(50, 132, 255);
+  color: var(--blue);
 }
 
 .credentials {
