@@ -7,7 +7,8 @@ const prefix = process.env.URL_PREFIX || 'pbid.io'
 export interface UrlModel extends Document {
     url: string,
     id: string,
-    short: string
+    short: string,
+    timestamp: string
 }
 
 const schema = new Schema({
@@ -24,6 +25,12 @@ const schema = new Schema({
         type: String,
         default: function() {
             return `https://${prefix}/${this.id}`
+        }
+    },
+    timestamp: {
+        type: String,
+        default: function() {
+            return new Date().toISOString()
         }
     }
 });

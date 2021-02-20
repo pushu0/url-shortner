@@ -3,18 +3,19 @@
     <transition name="fade" appear>
       <hero-card />
     </transition>
+    <h4>Recent</h4>
     <div class="outer-card table">
       <div v-if="loading">Loading</div>
       <ul v-for="item in collection" :key="item.id">
         <li>
           <div>
             <div class="url">{{ item.short }}</div>
-            <div class="timestamp">12 Dec 1983</div>
+            <div class="timestamp">{{ formatDate(item.timestamp) }}</div>
           </div>
           <div class="spacer"></div>
           <div>
-            <img src="info-24px.svg" alt="">
-            <img src="content_copy-24px.svg" alt="">
+            <img src="info-24px.svg" alt="" />
+            <img src="content_copy-24px.svg" alt="" />
           </div>
         </li>
       </ul>
@@ -26,6 +27,21 @@
 import { defineComponent, ref } from '@nuxtjs/composition-api'
 import HeroCard from '../components/HeroCard.vue'
 // import { UrlModel } from '../../api/src/db/models/Url.model'
+
+const monthNames = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+]
 
 export default defineComponent({
   components: {
@@ -50,9 +66,18 @@ export default defineComponent({
         loading.value = false
       })
 
+    const formatDate = (timestamp: string) => {
+      const date = new Date(timestamp)
+
+      return `${date.getDate()} ${
+        monthNames[date.getMonth()]
+      } ${date.getFullYear()} @${date.getHours()}:${date.getMinutes()}`
+    }
+
     return {
       loading,
       collection,
+      formatDate,
     }
   },
 })
