@@ -4,13 +4,13 @@ dotenv.config()
 
 const prefix = process.env.URL_PREFIX || 'pbid.io'
 
-interface IUrl extends Document{
+export interface UrlModel extends Document {
     url: string,
     id: string,
     short: string
 }
 
-const urlSchema = new Schema({
+const schema = new Schema({
     url: {
         type: String,
         required: true
@@ -19,18 +19,19 @@ const urlSchema = new Schema({
         type: String,
         required: true,
         unique: true
+    },
+    short: {
+        type: String,
+        default: function() {
+            return `https://${prefix}/${this.id}`
+        }
     }
 });
 
-urlSchema.virtual('short').get(function() {
-    const url = new URL(this.url)
-    return `${url.protocol}//${prefix}/${this.id}`
-});
-
-urlSchema.path('url').validate((val: string) => {
+schema.path('url').validate((val: string) => {
     const urlRegex = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/;
     return urlRegex.test(val);
 }, 'Invalid URL.');
 
-const Url = model<IUrl>("Url", urlSchema);
+const Url = model<UrlModel>("Url", schema);
 export default Url;

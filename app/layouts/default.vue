@@ -31,7 +31,7 @@ html {
   margin: 0;
 }
 
-.button--grey {
+.button--main {
   display: inline-block;
   border-radius: 4px;
   border: 1px solid var(--dark-blue);
@@ -45,21 +45,26 @@ html {
   transition: all 0.3s ease-in-out;
 }
 
-.button--grey:hover {
+.button--main:hover {
   color: #fff;
   background-color: var(--dark-blue);
 }
 
-.button--grey:disabled,
-.button--grey[disabled] {
+.button--main:disabled,
+.button--main[disabled] {
   background-color: var(--light-gray);
   border-color: var(--light-gray);
   color: gray;
 }
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 0.5s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+
+.highlight {
+  color: var(--blue);
 }
 </style>
