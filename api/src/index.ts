@@ -3,7 +3,11 @@ import dotenv from 'dotenv';
 dotenv.config()
 
 import express from "express";
+import cors from 'cors';
+import bodyParser from 'body-parser'
 const app = express();
+app.use(cors());
+app.use(bodyParser.json())
 import connectDb from "./db/connection";
 import Url from "./db/models/Url.model"
 import generateId from "./db/utils/generateId"
@@ -28,16 +32,22 @@ app.get("/urls", async (req, res) => {
 });
 
 app.post("/url-create", async (req, res) => {
-    const prettyId = await uniqueId()
+    const { url } = req.body
 
-    //TODO check if exists and return entry?
-    const user = new Url({ url: "https://urlTest.com", id: prettyId });
-    console.log(prettyId)
-    await user.save().then(() => console.log("User created"));
-    res.send({
-        short: user.short,
-        message: "User created \n"
-    });
+    if (!url) res.status(422).json('Wrong request body')
+
+    let urlModel = await Url.findOne({ url }).exec();
+
+    if (!urlModel) {
+        const prettyId = await uniqueId()
+        urlModel = new Url({
+            url: url,
+            id: prettyId
+        });
+        await urlModel.save().then(() => console.log("Url created"));
+    }
+
+    res.status(200).send(urlModel);
 });
 
 
