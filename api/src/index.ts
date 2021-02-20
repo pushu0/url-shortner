@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
     res.send("Hello from Node.js app \n");
 });
 app.get("/urls", async (req, res) => {
-    const users = await Url.find();
+    const users = await Url.find().sort({'timestamp': 'desc'});
     res.json(users);
 });
 
