@@ -1,6 +1,6 @@
 <template>
   <div class="outer-card">
-    <div class="hero-image">
+    <div class="hero-image" style="display:none;">
       <hero-image />
     </div>
     <div class="card">
@@ -97,9 +97,10 @@ export default defineComponent({
 </script>
 <style scoped>
 .hero-image {
-  max-width: 500px;
+  max-width: 400px;
   width: 100%;
   margin: auto;
+  margin-bottom: 3.2em;
 }
 
 .title {
@@ -107,18 +108,19 @@ export default defineComponent({
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
   font-weight: 500;
-  font-size: 50px;
-  color: #35495e;
+  font-size: 40px;
+  color: var(--charcoal);
   letter-spacing: 1px;
   margin-bottom: 0.2em;
 }
 .heading {
-  max-width: 80%;
+  max-width: 86%;
   margin: auto;
+  margin-bottom: 0.7em;
 }
 .heading p {
   font-weight: 300;
-  font-size: 15px;
+  font-size: 13px;
   color: black;
   word-spacing: 5px;
   padding-bottom: 15px;
