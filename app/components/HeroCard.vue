@@ -43,6 +43,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
 import useApi from '../compositions/useApi'
+import useUtils from '../compositions/useUtils'
 import HeroImage from './HeroImage.vue'
 
 export default defineComponent({
@@ -51,7 +52,8 @@ export default defineComponent({
   },
   setup() {
     const url = ref<string>('')
-    const { validators, shortenUrl } = useApi()
+    const { shortenUrl } = useApi()
+    const { validators } = useUtils()
     const isValid = computed(() => validators.isURL(url.value))
 
     return {

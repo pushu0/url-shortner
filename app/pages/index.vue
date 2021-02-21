@@ -4,32 +4,11 @@
       <hero-card />
     </transition>
 
-    <div v-if="collection.length" class="outer-card table">
-      <h2>Recent</h2>
-      <div v-if="loading">Loading</div>
-      <ul>
-        <transition-group
-          v-for="item in collection"
-          :key="item.id"
-          name="slide-fade"
-          mode="in-out"
-          appear
-          tag="li"
-        >
-          <div :key="item.id" class="list-item">
-            <div>
-              <div class="url">{{ item.short }}</div>
-              <div class="timestamp">{{ formatDate(item.timestamp) }}</div>
-            </div>
-            <div class="spacer"></div>
-            <div>
-              <img src="info-24px.svg" alt="" />
-              <img src="content_copy-24px.svg" alt="" />
-            </div>
-          </div>
-        </transition-group>
-      </ul>
-    </div>
+    <recent-list
+      v-if="collection.length"
+      :items="collection"
+      class="outer-card table"
+    />
   </div>
 </template>
 
@@ -37,14 +16,17 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 import HeroCard from '../components/HeroCard.vue'
 import useApi from '../compositions/useApi'
-// import { UrlModel } from '../../api/src/db/models/Url.model'
+import useUtils from '../compositions/useUtils'
+import RecentList from '../components/RecentList.vue'
 
 export default defineComponent({
   components: {
     HeroCard,
+    RecentList,
   },
   setup() {
-    const { loading, collection, utils, fetchCollection } = useApi()
+    const { loading, collection, fetchCollection } = useApi()
+    const { utils } = useUtils()
 
     fetchCollection()
 
@@ -94,18 +76,11 @@ li {
   border-bottom: 1px solid var(--light-gray);
 }
 
-.list-item {
-  background-color: white;
-  padding: 16px;
-  display: flex;
-  flex-direction: row;
-}
-
-li:first-child .list-item {
+li:first-child >>> .list-item {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 }
-li:last-child .list-item {
+li:last-child >>> .list-item {
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
 }
@@ -117,11 +92,5 @@ li:last-child .list-item {
 
 .spacer {
   flex: 1 1 auto;
-}
-
-.timestamp {
-  font-size: 10px;
-  margin-top: 4px;
-  text-transform: uppercase;
 }
 </style>
