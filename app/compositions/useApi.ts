@@ -1,5 +1,6 @@
 import { computed, ref } from '@nuxtjs/composition-api'
 import { UrlModel } from '../../api/src/db/models/Url.model'
+import useUtils from './useUtils'
 
 const baseApiUrl = 'http://localhost:8080'
 
@@ -38,16 +39,17 @@ const addToCollection = (data: UrlModel) => {
 }
 
 const shortenUrl = async (url: string) => {
-  // loading.value = true
   try {
     const response = await post(url)
     const data = await response.json()
     addToCollection(data)
+    return data
   } catch (e) {
     // TODO Error page
   } finally {
-    // loading.value = false
+    loading.value = false
   }
+
 }
 
 const useApi = () => {
@@ -60,7 +62,8 @@ const useApi = () => {
 }
 
 const post = (data: string) => {
-  const protocol = isProtocol(data) ? '' : 'http://'
+  const { validators } = useUtils()
+  const protocol = validators.isProtocol(data) ? '' : 'http://'
   return fetch(`${baseApiUrl}/url-create`, {
     method: 'POST',
     headers: {

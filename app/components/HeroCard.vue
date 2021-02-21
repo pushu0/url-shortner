@@ -15,21 +15,49 @@
         </div>
         <div class="links">
           <input
+            v-if="!isGeneratedState"
             v-model="url"
             type="text"
             name="url"
             class="text-input"
             placeholder="Enter long url here"
-            @keydown.enter="shortenUrl"
+            @keydown.enter="shorten"
           />
+
+          <input
+            v-else
+            :value="generatedUrl"
+            type="text"
+            readonly
+            name="generatedUrl"
+            class="text-input"
+          />
+
           <button
-            target="_blank"
+            v-if="!isGeneratedState"
             rel="noopener noreferrer"
             class="button--main"
             :disabled="!isValid"
-            @click="shortenUrl"
+            @click="shorten"
           >
             Shorten Url
+          </button>
+          <button
+            v-else
+            rel="noopener noreferrer"
+            class="button--main"
+            @click="shorten"
+          >
+            Copy
+            <img src="content_copy-24px.svg" alt="copy to clipboard" />
+          </button>
+          <button
+            v-if="isGeneratedState"
+            rel="noopener noreferrer"
+            class="button--main"
+            @click="resetState"
+          >
+            Shorten new url
           </button>
         </div>
         <div class="credentials">
@@ -52,14 +80,29 @@ export default defineComponent({
   },
   setup() {
     const url = ref<string>('')
+    const isGeneratedState = ref<boolean>(false)
+    const generatedUrl = ref<string>('')
     const { shortenUrl } = useApi()
     const { validators } = useUtils()
     const isValid = computed(() => validators.isURL(url.value))
 
+    const resetState = () => {
+      url.value = ''
+      isGeneratedState.value = false
+      generatedUrl.value = ''
+    }
+
     return {
       url,
       isValid,
-      shortenUrl: () => shortenUrl(url.value),
+      isGeneratedState,
+      generatedUrl,
+      resetState,
+      shorten: async () => {
+        isGeneratedState.value = true
+        const response = await shortenUrl(url.value)
+        generatedUrl.value = response.short
+      },
     }
   },
 })
@@ -134,5 +177,11 @@ export default defineComponent({
   padding: 4% 5% 6% 5%;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   background-color: white;
+}
+
+@media only screen and (max-width: 1200px) {
+  .outer-card {
+    flex-direction: column;
+  }
 }
 </style>
