@@ -76,11 +76,11 @@ li {
   border-bottom: 1px solid var(--light-gray);
 }
 
-li:first-child >>> .list-item {
+li:first-child .list-item {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 }
-li:last-child >>> .list-item {
+li:last-child .list-item {
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
 }

@@ -49,7 +49,7 @@ export default defineComponent({
   margin-left: 15px;
   font-size: 16px;
   display: flex;
-  flex: 3;
+  flex: 6;
   background-color: var(--light-gray);
 }
 .text-input:focus {

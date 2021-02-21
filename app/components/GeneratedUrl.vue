@@ -8,22 +8,15 @@
       class="text-input"
     />
 
-    <button rel="noopener noreferrer" class="button--main" @click="input">
-      <copy fill="white" />
-    </button>
     <button rel="noopener noreferrer" class="button--main" @click="reset">
-      Shorten new url
+      Shorten another
     </button>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import Copy from './icons/Copy'
 
 export default defineComponent({
-  components: {
-    Copy
-  },
   props: {
     url: {
       type: String,
@@ -31,10 +24,8 @@ export default defineComponent({
     },
   },
   setup(_, { emit }) {
-    const input = () => emit('input')
     const reset = () => emit('reset')
     return {
-      input,
       reset,
     }
   },
@@ -51,8 +42,9 @@ export default defineComponent({
   margin-left: 15px;
   font-size: 16px;
   display: flex;
-  flex: 1;
-  background-color: var(--light-gray);
+  flex: 6;
+  background-color: var(--blue);
+  color: white;
 }
 .text-input:focus {
   outline: var(--dark-blue) auto 1px;

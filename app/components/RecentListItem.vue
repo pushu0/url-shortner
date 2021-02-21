@@ -4,11 +4,6 @@
       <div class="url">{{ item.short }}</div>
       <div class="timestamp">{{ formatDate(item.timestamp) }}</div>
     </div>
-    <div class="spacer"></div>
-    <div>
-      <img src="info-24px.svg" alt="more info" />
-      <img src="content_copy-24px.svg" alt="copy to clipboard" />
-    </div>
   </div>
 </template>
 <script lang="ts">
