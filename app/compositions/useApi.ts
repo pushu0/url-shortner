@@ -1,6 +1,11 @@
 import { computed, ref } from '@nuxtjs/composition-api'
-import { UrlModel } from '../../api/src/db/models/Url.model'
 import useUtils from './useUtils'
+export interface UrlModel {
+  url: string
+  id: string
+  short: string
+  timestamp: string
+}
 
 const baseApiUrl = 'http://localhost:8080'
 
@@ -49,7 +54,6 @@ const shortenUrl = async (url: string) => {
   } finally {
     loading.value = false
   }
-
 }
 
 const useApi = () => {

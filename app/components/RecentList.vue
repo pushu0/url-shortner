@@ -17,7 +17,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from '@nuxtjs/composition-api'
-import { UrlModel } from '../../api/src/db/models/Url.model'
+import { UrlModel } from '../compositions/useApi'
 import RecentListItem from './RecentListItem.vue'
 
 export default defineComponent({

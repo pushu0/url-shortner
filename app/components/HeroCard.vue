@@ -18,7 +18,7 @@
           <generated-url v-else :url="generatedUrl" @reset="resetState" />
         </div>
         <div class="credentials">
-          Powered by <span class="highlight">IWantThisJob</span>.
+          Powered by <span class="highlight">Curiosity</span>.
         </div>
       </div>
     </div>
@@ -26,9 +26,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import useApi from '../compositions/useApi'
-import useUtils from '../compositions/useUtils'
 import HeroImage from './HeroImage.vue'
 import GenerateUrl from './GenerateUrl.vue'
 import GeneratedUrl from './GeneratedUrl.vue'
@@ -43,8 +42,6 @@ export default defineComponent({
     const isGeneratedState = ref<boolean>(false)
     const generatedUrl = ref<string>('')
     const { shortenUrl } = useApi()
-    const { validators } = useUtils()
-    const isValid = computed(() => validators.isURL(url.value))
 
     const resetState = () => {
       isGeneratedState.value = false
@@ -52,7 +49,6 @@ export default defineComponent({
     }
 
     return {
-      isValid,
       isGeneratedState,
       generatedUrl,
       resetState,

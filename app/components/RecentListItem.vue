@@ -9,14 +9,14 @@
 <script lang="ts">
 import { defineComponent, PropType } from '@nuxtjs/composition-api'
 import useUtils from '../compositions/useUtils'
-import { UrlModel } from '../../api/src/db/models/Url.model'
+import { UrlModel } from '../compositions/useApi'
 
 export default defineComponent({
   props: {
     item: {
       type: Object as PropType<UrlModel>,
       required: true,
-    }
+    },
   },
   setup() {
     const { utils } = useUtils()
