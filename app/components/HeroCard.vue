@@ -14,51 +14,8 @@
           </p>
         </div>
         <div class="links">
-          <input
-            v-if="!isGeneratedState"
-            v-model="url"
-            type="text"
-            name="url"
-            class="text-input"
-            placeholder="Enter long url here"
-            @keydown.enter="shorten"
-          />
-
-          <input
-            v-else
-            :value="generatedUrl"
-            type="text"
-            readonly
-            name="generatedUrl"
-            class="text-input"
-          />
-
-          <button
-            v-if="!isGeneratedState"
-            rel="noopener noreferrer"
-            class="button--main"
-            :disabled="!isValid"
-            @click="shorten"
-          >
-            Shorten Url
-          </button>
-          <button
-            v-else
-            rel="noopener noreferrer"
-            class="button--main"
-            @click="shorten"
-          >
-            Copy
-            <img src="content_copy-24px.svg" alt="copy to clipboard" />
-          </button>
-          <button
-            v-if="isGeneratedState"
-            rel="noopener noreferrer"
-            class="button--main"
-            @click="resetState"
-          >
-            Shorten new url
-          </button>
+          <generate-url v-if="!isGeneratedState" @input="shorten" />
+          <generated-url v-else :url="generatedUrl" @reset="resetState" />
         </div>
         <div class="credentials">
           Powered by <span class="highlight">IWantThisJob</span>.
@@ -73,13 +30,16 @@ import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
 import useApi from '../compositions/useApi'
 import useUtils from '../compositions/useUtils'
 import HeroImage from './HeroImage.vue'
+import GenerateUrl from './GenerateUrl.vue'
+import GeneratedUrl from './GeneratedUrl.vue'
 
 export default defineComponent({
   components: {
     HeroImage,
+    GenerateUrl,
+    GeneratedUrl,
   },
   setup() {
-    const url = ref<string>('')
     const isGeneratedState = ref<boolean>(false)
     const generatedUrl = ref<string>('')
     const { shortenUrl } = useApi()
@@ -87,20 +47,18 @@ export default defineComponent({
     const isValid = computed(() => validators.isURL(url.value))
 
     const resetState = () => {
-      url.value = ''
       isGeneratedState.value = false
       generatedUrl.value = ''
     }
 
     return {
-      url,
       isValid,
       isGeneratedState,
       generatedUrl,
       resetState,
-      shorten: async () => {
+      shorten: async (url: string) => {
         isGeneratedState.value = true
-        const response = await shortenUrl(url.value)
+        const response = await shortenUrl(url)
         generatedUrl.value = response.short
       },
     }
@@ -141,25 +99,6 @@ export default defineComponent({
 
 .links {
   padding-top: 15px;
-  display: flex;
-}
-
-.text-input {
-  display: inline-block;
-  border-radius: 4px;
-  border: 0px;
-  color: var(--charcoal);
-  text-decoration: none;
-  padding: 10px 10px;
-  margin-left: 15px;
-  font-size: 16px;
-  display: flex;
-  flex: 1;
-  background-color: var(--light-gray);
-}
-
-.text-input:focus {
-  outline: var(--dark-blue) auto 1px;
 }
 
 .credentials {
