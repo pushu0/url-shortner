@@ -25,7 +25,7 @@ import useUtils from '../compositions/useUtils'
 export default defineComponent({
   setup(_, { emit }) {
     const url = ref<string>('')
-    const input = () => emit('input', url.value)
+    const input = () => isValid.value && emit('input', url.value)
 
     const { validators } = useUtils()
 
