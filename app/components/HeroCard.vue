@@ -1,6 +1,6 @@
 <template>
   <div class="outer-card">
-    <div class="hero-image" style="display:none;">
+    <div class="hero-image">
       <hero-image />
     </div>
     <div class="card">
@@ -42,21 +42,8 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
+import useApi from '../compositions/useApi'
 import HeroImage from './HeroImage.vue'
-
-const isURL = (str: string) =>
-  /(?:https?:\/\/)?(?:[a-zA-Z0-9.-]+?\.(?:[a-zA-Z])|\d+\.\d+\.\d+\.\d+)/.test(
-    str
-  )
-
-const isProtocol = (url: string) => {
-  try {
-    const urlObj = new URL(url)
-    return !!urlObj.protocol
-  } catch {
-    return false
-  }
-}
 
 export default defineComponent({
   components: {
@@ -64,33 +51,13 @@ export default defineComponent({
   },
   setup() {
     const url = ref<string>('')
-    const loading = ref<boolean>(false)
-    const shortenUrl = async () => {
-      const protocol = isProtocol(url.value) ? '' : 'http://'
-      loading.value = true
-      try {
-        await fetch('http://localhost:8080/url-create', {
-          method: 'POST',
-          headers: {
-            Accept: '*/*',
-            'Content-Type': 'application/json;charset=UTF-8',
-          },
-          body: JSON.stringify({
-            url: `${protocol}${url.value}`,
-          }),
-        })
-      } catch (e) {
-      } finally {
-        loading.value = true
-      }
-    }
-
-    const isValid = computed(() => isURL(url.value))
+    const { validators, shortenUrl } = useApi()
+    const isValid = computed(() => validators.isURL(url.value))
 
     return {
       url,
       isValid,
-      shortenUrl,
+      shortenUrl: () => shortenUrl(url.value),
     }
   },
 })
@@ -156,5 +123,14 @@ export default defineComponent({
   bottom: 5px;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.outer-card {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+
+  padding: 4% 5% 6% 5%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  background-color: white;
 }
 </style>
