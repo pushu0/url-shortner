@@ -1,9 +1,10 @@
 FROM node:latest
-WORKDIR /api
-COPY ./package.json /api
-# COPY ./api/package-lock.json /api
+WORKDIR /app
+COPY ./package.json /app
 RUN yarn install
-COPY ./ /api
-EXPOSE 8080
+COPY ./ /app
+ENV HOST=0.0.0.0
+ENV PORT=3000
+EXPOSE 3000
 RUN yarn build
 CMD ["yarn", "start"]
