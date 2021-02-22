@@ -12,9 +12,13 @@ const options = {
 }
 
 const connection = `mongodb://${db}:27017/url-shortner`;
-const connectDb = () => {
+export const connectDb = () => {
  return mongoose.connect(connection, options);
 };
+
+export const disconnectDb = () => {
+    return mongoose.connection.close()
+}
 
 export default connectDb
 
