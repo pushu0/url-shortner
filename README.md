@@ -5,6 +5,9 @@
 ```bash
 # install dependencies and run
 $ docker-compose up --build
+
+# access on
+$ localhost:3000
 ```
 
 ## Build Api
